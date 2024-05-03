@@ -18,5 +18,5 @@
   (let [command (str "(org-capture-engine-issue \""
                      task-description
                      "\")")
-        emacsclient  "/opt/homebrew/bin/emacsclient"]
+        emacsclient  "/run/current-system/sw/bin/emacsclient"]
     (.run js/Task emacsclient (clj->js ["--eval" command]))))

@@ -36,7 +36,7 @@
   (make-menu
    {:a {:title "Alfred"
         :action (fn [] (app/launch "Alfred 5"))}
-    :b (launch-app "Brave Browser")
+    :b (launch-app "Firefox")
     :c (launch-app "Calendar")
     :f (launch-app "Finder")
     :i (launch-app "iTerm")
@@ -45,7 +45,7 @@
         :action app/quit-focused}
     :w (launch-app "Webex")
     :s (launch-app "Safari")
-    :z (launch-app "Zoom")}))
+    :z (launch-app "zoom.us")}))
 
 (defn emacs []
   (make-menu
@@ -118,28 +118,28 @@
                (update submenu :items make-menu)))
       {}
       custom/menu)
-     {:space {:title "Alfred"
+     {:space {:title "alfred"
               :action
               (fn [] (app/launch "Alfred 5"))}
-      :a      {:title "Apps"
+      :a      {:title "apps"
                :items (apps)}
-      :e      {:title "Emacs"
+      :e      {:title "emacs"
                :items (emacs)}
-      :o      {:title "Operation"
+      :o      {:title "operation"
                :items (machine)}
-      :r      {:title "Reload SpacePhoenix"
+      :r      {:title "reload SpacePhoenix"
                :action (fn []
                          (.reload js/Phoenix))}
-      :t      {:title "Tile"
-               :action (fn [] (tile/tile))}
-      :w      {:title "Window"
+      :w      {:title "window"
                :items (windows)}
       :s      {:title "Space"
-               :items {:s {:title "Start Auto Tile"
+               :items {:s {:title "start auto tile"
                            :action (fn [] (tile/start-auto-tile))}
-                       :q {:title "Stop Auto Tile"
-                           :action (fn [] (tile/stop-auto-tile))}}}
-      :g      {:title "Quit"
+                       :q {:title "stop auto tile"
+                           :action (fn [] (tile/stop-auto-tile))}
+                       :t {:title "tile"
+                           :action (fn [] (tile/tile))}}}
+      :g      {:title "quit"
                :modifiers [:ctrl]
                :action (fn [] (menu/unbind-all-menu-keys))}}))})
 

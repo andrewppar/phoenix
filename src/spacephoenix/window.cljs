@@ -47,6 +47,9 @@
 (defn spaces [window]
   (.spaces window))
 
+(defn top-left [window]
+  (.topLeft window))
+
 (defn move-to [window {:keys [x y h w]}]
   (.setTopLeft window (clj->js {:x x :y y}))
   (.setSize window (clj->js {:width w :height h}))
