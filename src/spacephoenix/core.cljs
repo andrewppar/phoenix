@@ -10,7 +10,8 @@
    [spacephoenix.space :as space]
    [spacephoenix.tile :as tile]
    [spacephoenix.emacs :as emacs]
-   [spacephoenix.window :as window]))
+   [spacephoenix.window.core :as window]
+   [spacephoenix.window.switcher :as window-switcher]))
 
 (message/alert "Welcome to SpacePhoenix")
 
@@ -39,7 +40,7 @@
     :b (launch-app "Firefox")
     :c (launch-app "Calendar")
     :f (launch-app "Finder")
-    :i (launch-app "iTerm")
+    :i (launch-app "iterm2")
     :m (launch-app "Mail")
     :q {:title "Quit"
         :action app/quit-focused}
@@ -50,7 +51,9 @@
 (defn emacs []
   (make-menu
    {:c {:title "Capture"
-        :action (fn [] (emacs/capture))}}))
+        :action (fn [] (emacs/capture))}
+    :e {:title "emacs-anywhere"
+        :action (fn [] (proc/emacs-anywhere))}}))
 
 (defn machine []
   (make-menu
@@ -92,8 +95,6 @@
                   (fn [] (space/send-focused-window-to-space-and-refocus number))})))
       initial-map
       space-numbers))))
-
-
 
 (defn switch-space-bindings []
   (let [space-nums (range 1 (inc (count (space/all))))]
@@ -139,6 +140,8 @@
                            :action (fn [] (tile/stop-auto-tile))}
                        :t {:title "tile"
                            :action (fn [] (tile/tile))}}}
+      :x {:title "test"
+          :action (fn [] (window-switcher/show-numbered-windows))}
       :g      {:title "quit"
                :modifiers [:ctrl]
                :action (fn [] (menu/unbind-all-menu-keys))}}))})

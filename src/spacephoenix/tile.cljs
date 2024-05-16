@@ -3,7 +3,7 @@
    [spacephoenix.app :as app]
    [spacephoenix.screen :as screen]
    [spacephoenix.space :as space]
-   [spacephoenix.window :as window]
+   [spacephoenix.window.core :as window]
    [spacephoenix.utils :refer [defn-timed]]))
 
 (def events (atom nil))
@@ -32,7 +32,7 @@
 (defn bad-window-id [window]
   (hash (str (window/title window) (window/top-left window))))
 
-(defn-timed tile []
+(defn tile []
   (let [screen (screen/current)
         windows (->> (app/all)
                      (reduce
@@ -47,19 +47,19 @@
                         (and (= (window/screen window) screen)
                              (window/standard? window)))))
         {:keys [x y height width]} (screen/current-size-and-position)
-        _ (println (map window/title (sort-by window/title windows)))
+        #_#__ (println (map window/title (sort-by window/title windows)))
         window-count (count windows)
         window-map   (get
                       (tile-configurations x y height width)
                       window-count)]
     (if window-map
       #_(let [windows (mapv window/title (sort-by window/title windows))]
-        (loop [idx 0]
-          (println (nth windows idx))
-          (println (nth window-map idx))
-          (window/move-to (nth windows idx) (nth window-map idx))
-          (when (< idx (count windows))
-            (recur (inc idx)))))
+          (loop [idx 0]
+            (println (nth windows idx))
+            (println (nth window-map idx))
+            (window/move-to (nth windows idx) (nth window-map idx))
+            (when (< idx (count windows))
+              (recur (inc idx)))))
       (mapv window/move-to windows window-map)
       (mapv window/maximize windows))))
 
